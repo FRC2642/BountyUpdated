@@ -4,31 +4,36 @@
 
 package frc.robot.Commands;
 
-import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Subsystems.DriveSubsystem;
+import frc.robot.Subsystems.JackSubsystem;
 
-public class DriveStraightCommand extends Command {
-  /** Creates a new DriveStraightCommand. */
-  DriveSubsystem drive;
-  PIDController pid = new PIDController(0.2, 0, 0);
-  public DriveStraightCommand(DriveSubsystem drive) {
-    this.drive = drive;
-    addRequirements(drive);
-    // Use addRequirements() here to declare subsystem dependencies.
+public class JackCommand extends Command {
+  /** Creates a new JackCommand. */
+  JackSubsystem jack;
+  XboxController control;
+  public JackCommand(JackSubsystem jack, XboxController control) {
+    this.jack = jack;
+    this.control = control;
+    addRequirements(jack);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    drive.resetGyro();
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    System.out.println(drive.getYaw());
-    drive.move(0, pid.calculate(drive.getYaw(), 0) * 0.3);
+    if (control.getPOV() == 90){
+      jack.move(1);
+    }
+    else if (control.getPOV() == 270){
+      jack.move(-1);
+    }
+    else{
+      jack.move(0);
+    }
   }
 
   // Called once the command ends or is interrupted.

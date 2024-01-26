@@ -32,7 +32,7 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
   public void move(double speed, double rotation){
-    diffDrive.arcadeDrive(speed * 0.5, rotation * 0.2);
+    diffDrive.arcadeDrive(speed, rotation);
   }
 
   public double getYaw(){

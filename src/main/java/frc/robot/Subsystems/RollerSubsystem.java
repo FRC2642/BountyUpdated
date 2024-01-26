@@ -9,20 +9,15 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class IntakeSubsystem extends SubsystemBase {
-  /** Creates a new IntakeSubsystem. */
-  private VictorSPX intakeMotor1 = new VictorSPX(8);
-  private VictorSPX intakeMotor2 = new VictorSPX(9);
+public class RollerSubsystem extends SubsystemBase {
+  /** Creates a new RollerSubsystem. */
+  private VictorSPX roller = new VictorSPX(10);
 
-  public IntakeSubsystem() {
-    intakeMotor2.follow(intakeMotor1);
+  public RollerSubsystem() {}
+
+  public void setRoller(double speed){
+    roller.set(VictorSPXControlMode.PercentOutput, speed);
   }
-
-  public void setIntake(double speed){
-    intakeMotor1.set(VictorSPXControlMode.PercentOutput, speed);
-    
-  }
-
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

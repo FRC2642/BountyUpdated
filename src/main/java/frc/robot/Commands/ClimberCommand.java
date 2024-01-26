@@ -4,31 +4,38 @@
 
 package frc.robot.Commands;
 
-import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Subsystems.DriveSubsystem;
+import frc.robot.Subsystems.ClimberSubsystem;
 
-public class DriveStraightCommand extends Command {
-  /** Creates a new DriveStraightCommand. */
-  DriveSubsystem drive;
-  PIDController pid = new PIDController(0.2, 0, 0);
-  public DriveStraightCommand(DriveSubsystem drive) {
-    this.drive = drive;
-    addRequirements(drive);
+public class ClimberCommand extends Command {
+  /** Creates a new ClimberCommand. */
+  ClimberSubsystem climber;
+  XboxController control;
+  public ClimberCommand(ClimberSubsystem climber, XboxController control) {
+    this.climber = climber;
+    this.control = control;
+    addRequirements(climber);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    drive.resetGyro();
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    System.out.println(drive.getYaw());
-    drive.move(0, pid.calculate(drive.getYaw(), 0) * 0.3);
+    if (control.getPOV() == 0){
+      climber.move(1);
+    }
+    else if (control.getPOV() == 180){
+      climber.move(-1);
+    }
+    else{
+      climber.move(0);
+    }
+
   }
 
   // Called once the command ends or is interrupted.
